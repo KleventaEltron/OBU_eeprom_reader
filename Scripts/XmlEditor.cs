@@ -11,6 +11,97 @@ namespace EepromReader.Scripts
     {
         private byte[] TempArray = new byte[4096];
 
+        public void CreateEepromExcel(List<EepromMapping> mappings, string filePath)
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("EEPROM Mapping");
+                int currentRow = 1;
+
+                // Add headers
+                worksheet.Cell(currentRow, 1).Value = "Address";
+                worksheet.Cell(currentRow, 2).Value = "Name";
+                worksheet.Cell(currentRow, 3).Value = "Length";
+                worksheet.Cell(currentRow, 4).Value = "Data Type";
+                worksheet.Cell(currentRow, 5).Value = "Values";
+                currentRow++;
+
+                foreach (var mapping in mappings)
+                {
+                    worksheet.Cell(currentRow, 1).Value = mapping.Address;
+                    worksheet.Cell(currentRow, 2).Value = mapping.Name;
+                    worksheet.Cell(currentRow, 3).Value = mapping.Length;
+                    worksheet.Cell(currentRow, 4).Value = mapping.EepromDataType.Name;
+
+                    var cell = worksheet.Cell(currentRow, 5);
+                    var value = mapping.Value;
+
+                    // Set correct typed value
+                    if (value is byte b) cell.SetValue(b);
+                    else if (value is ushort us) cell.SetValue(us);
+                    else if (value is short s) cell.SetValue(s);
+                    else if (value is uint ui) cell.SetValue(ui);
+                    else if (value is int i) cell.SetValue(i);
+                    else if (value is sbyte sb) cell.SetValue(sb);
+                    else if (value is string str) cell.SetValue(str);
+                    else if (value is byte[] ba) cell.SetValue(string.Join(", ", ba));
+                    else if (value is ushort[] usa) cell.SetValue(string.Join(", ", usa));
+                    else if (value is short[] sa) cell.SetValue(string.Join(", ", sa));
+                    else if (value is uint[] uia) cell.SetValue(string.Join(", ", uia));
+                    else if (value is sbyte[] sba) cell.SetValue(string.Join(", ", sba));
+                    else if (value is string[] stra) cell.SetValue(string.Join(", ", stra));
+                    else if (value is byte[,] byte2DArray) cell.SetValue(Convert2DArrayToString(byte2DArray));
+                    else if (value is byte[,,] byte3DArray) cell.SetValue(Convert3DArrayToString(byte3DArray));
+                    else cell.SetValue("Unsupported type");
+
+                    cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+
+                    currentRow++;
+                }
+
+                worksheet.Columns().AdjustToContents();
+                workbook.SaveAs(filePath);
+            }
+        }
+
+        private string Convert2DArrayToString(byte[,] array)
+        {
+            var rows = array.GetLength(0);
+            var cols = array.GetLength(1);
+            var result = new StringBuilder();
+            for (int i = 0; i < rows; i++)
+            {
+                var row = new List<string>();
+                for (int j = 0; j < cols; j++)
+                {
+                    row.Add(array[i, j].ToString());
+                }
+                result.AppendLine(string.Join(", ", row));
+            }
+            return result.ToString();
+        }
+
+        private string Convert3DArrayToString(byte[,,] array)
+        {
+            var dim1 = array.GetLength(0);
+            var dim2 = array.GetLength(1);
+            var dim3 = array.GetLength(2);
+            var result = new StringBuilder();
+            for (int i = 0; i < dim1; i++)
+            {
+                for (int j = 0; j < dim2; j++)
+                {
+                    var slice = new List<string>();
+                    for (int k = 0; k < dim3; k++)
+                    {
+                        slice.Add(array[i, j, k].ToString());
+                    }
+                    result.AppendLine(string.Join(", ", slice));
+                }
+            }
+            return result.ToString();
+        }
+
         public void ImportFromExcel(List<EepromMapping> mappings, string filePath)
         {
             using (var workbook = new XLWorkbook(filePath))

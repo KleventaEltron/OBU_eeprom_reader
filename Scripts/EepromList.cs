@@ -359,7 +359,7 @@ namespace EepromReader.Scripts
 
                     // GPRS Send Variables
                     new EepromMapping { Address = 3110, Name = "EE_GprsSendVarMem", Length = 50, EepromDataType = typeof(byte[]) },
-                    new EepromMapping { Address = 3160, Name = "EE_GprsSendVarStartAddr", Length = 200, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3160, Name = "EE_GprsSendVarStartAddr", Length = 50, EepromDataType = typeof(byte[]) }, // Klopt niet met de werkhelijkheid van wat er op de Eeprom staat. Er zijn maar voor 50 bytes gedefineerd. Maar staat 200.
                     new EepromMapping { Address = 3360, Name = "EE_GprsSendVarLengte", Length = 50, EepromDataType = typeof(byte[]) },
                     new EepromMapping { Address = 3410, Name = "EE_GprsSendVarAantal", Length = 50, EepromDataType = typeof(byte[]) },
 
@@ -386,7 +386,7 @@ namespace EepromReader.Scripts
                     new EepromMapping { Address = 3494, Name = "EE_WD_Verwarming", Length = 1, EepromDataType = typeof(byte) },
                     new EepromMapping { Address = 3495, Name = "EE_WD_Koeling", Length = 1, EepromDataType = typeof(byte) },
                     new EepromMapping { Address = 3496, Name = "EE_WD_LogTimer", Length = 2, EepromDataType = typeof(byte[]) },
-                    new EepromMapping { Address = 3498, Name = "EE_WD_Voeler_Temp", Length = 32, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3498, Name = "EE_WD_Voeler_Temp", Length = 16, EepromDataType = typeof(byte[]) },
                     new EepromMapping { Address = 3530, Name = "EE_WD_Voeler_Offset", Length = 16, EepromDataType = typeof(byte[]) },
                     new EepromMapping { Address = 3546, Name = "EE_WD_SwitchWaardeExt", Length = 2, EepromDataType = typeof(byte[]) },
                     new EepromMapping { Address = 3548, Name = "EE_WD_SwitchModeExt", Length = 2, EepromDataType = typeof(byte[]) },
@@ -455,6 +455,7 @@ namespace EepromReader.Scripts
         // - unsigned long int
         private static void InitializeUnfoldedMapping()
         {
+            // DIT KLOPT NOG NIET HELEMAAL, MOET NOG WORDEN NAGEKEKEN EN AANGEPAST!!!
             unfoldedMapping = new List<EepromMapping>()
                 {
                     new EepromMapping { Address = 0, Name = "EE_Dummy0", Length = 1, EepromDataType = typeof(byte) },
@@ -462,7 +463,7 @@ namespace EepromReader.Scripts
                     new EepromMapping { Address = 2, Name = "EE_KanaalZender", Length = 1, EepromDataType = typeof(byte) },
                     new EepromMapping { Address = 3, Name = "EE_ZenderAanUit", Length = 1, EepromDataType = typeof(byte) },
 
-                    new EepromMapping { Address = 4, Name = "EE_Versie", Length = 1, EepromDataType = typeof(ushort) },
+                    new EepromMapping { Address = 4, Name = "EE_Versie", Length = 2, EepromDataType = typeof(ushort) },
                     new EepromMapping { Address = 6, Name = "EE_ResetTeller", Length = 2, EepromDataType = typeof(ushort) },
                     new EepromMapping { Address = 8, Name = "EE_RitStatusMode", Length = 1, EepromDataType = typeof(byte) },
                     new EepromMapping { Address = 10, Name = "EE_DummyRitStatus", Length = 10, EepromDataType = typeof(byte[]) },
@@ -694,6 +695,8 @@ namespace EepromReader.Scripts
                     new EepromMapping { Address = 1884, Name = "EE_MU_IngangTempSensorExt15", Length = 15, EepromDataType = typeof(string) },
                     new EepromMapping { Address = 1899, Name = "EE_MU_IngangTempSensorExt16", Length = 15, EepromDataType = typeof(string) },
 
+                    new EepromMapping { Address = 1914, Name = "EE_Groot_Dummy5", Length = 200, EepromDataType = typeof(byte[]) },
+
                     new EepromMapping { Address = 2494, Name = "EE_SmsNrsEnNaam1", Length = 15, EepromDataType = typeof(string) },
                     new EepromMapping { Address = 2509, Name = "EE_SmsNrsEnNaam2", Length = 15, EepromDataType = typeof(string) },
                     new EepromMapping { Address = 2524, Name = "EE_SmsNrsEnNaam3", Length = 15, EepromDataType = typeof(string) },
@@ -713,11 +716,163 @@ namespace EepromReader.Scripts
                     new EepromMapping { Address = 2734, Name = "EE_SmsNrsEnNaam17", Length = 15, EepromDataType = typeof(string) },
                     new EepromMapping { Address = 2749, Name = "EE_SmsNrsEnNaam18", Length = 15, EepromDataType = typeof(string) },
                     new EepromMapping { Address = 2764, Name = "EE_SmsNrsEnNaam19", Length = 15, EepromDataType = typeof(string) },
-                    new EepromMapping { Address = 2779, Name = "EE_SmsNrsEnNaam20", Length = 15, EepromDataType = typeof(string) }
+                    new EepromMapping { Address = 2779, Name = "EE_SmsNrsEnNaam20", Length = 15, EepromDataType = typeof(string) },
+
+                    new EepromMapping { Address = 2794, Name = "EE_BelSelect", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2795, Name = "EE_GsmNetworkName", Length = 20, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2815, Name = "EE_GsmImei", Length = 18, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2833, Name = "EE_GsmNetworkId", Length = 12, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2845, Name = "EE_CompanyName", Length = 26, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2871, Name = "EE_CompanyInfo1", Length = 26, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2897, Name = "EE_CompanyInfo2", Length = 26, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2923, Name = "EE_CompanyInfo3", Length = 26, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2949, Name = "EE_CompanyInfo4", Length = 26, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2975, Name = "EE_CompanyInfo5", Length = 26, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 3001, Name = "EE_CompanyInfo6", Length = 26, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 3027, Name = "EE_CompanyInfo7", Length = 26, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 3053, Name = "EE_TrukID", Length = 16, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 3069, Name = "EE_MultiGprsMode", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3070, Name = "EE_weergaveLijst1", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3072, Name = "EE_weergaveLijst2", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3074, Name = "EE_weergaveLijst3", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3076, Name = "EE_weergaveLijst4", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3078, Name = "EE_weergaveLijst5", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3080, Name = "EE_weergaveLijst6", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3082, Name = "EE_weergaveLijst7", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3084, Name = "EE_weergaveLijst8", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3086, Name = "EE_weergaveLijst9", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3088, Name = "EE_weergaveLijst10", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3090, Name = "EE_weergaveLijst11", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3092, Name = "EE_weergaveLijst12", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3094, Name = "EE_weergaveLijst13", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3096, Name = "EE_weergaveLijst14", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3098, Name = "EE_weergaveLijst15", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3100, Name = "EE_weergaveLijst16", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3102, Name = "EE_weergaveLijst17", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3104, Name = "EE_weergaveLijst18", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3106, Name = "EE_weergaveLijst19", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3108, Name = "EE_weergaveLijst20", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3110, Name = "EE_GprsSendVarMem", Length = 50, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3160, Name = "EE_GprsSendVarStartAddr", Length = 50, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3360, Name = "EE_GprsSendVarLengte", Length = 50, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3410, Name = "EE_GprsSendVarAantal", Length = 50, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3460, Name = "EE_PowerSaveRelay", Length = 1, EepromDataType = typeof(byte) },
+
+                    // wd reset var bewaar
+                    new EepromMapping { Address = 3461, Name = "EE_WD_WdrTeller", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3462, Name = "EE_WD_ProgrammaStatus", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3463, Name = "EE_WD_RitStatus", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3464, Name = "EE_WD_RustSetBy", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3465, Name = "EE_WD_TijdNaarStandby", Length = 2, EepromDataType = typeof(ushort) },
+                    new EepromMapping { Address = 3467, Name = "EE_WD_InstallatieTimer", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3468, Name = "EE_WD_RitNummer", Length = 4, EepromDataType = typeof(uint) },
+                    new EepromMapping { Address = 3472, Name = "EE_WD_Alarm", Length = 9, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3481, Name = "EE_WD_Melding", Length = 6, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3487, Name = "EE_WD_SwitchWaardeObu", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3488, Name = "EE_WD_ToevoerVentielatieMomenteel", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3489, Name = "EE_WD_AfvoerVentielatieMomenteel", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3490, Name = "EE_WD_ToevoerVentielatieBereken", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3491, Name = "EE_WD_AfvoerVentielatieBereken", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3492, Name = "EE_WD_VentielatieRegelTijd", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3493, Name = "EE_WD_RegelTijdTimer", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3494, Name = "EE_WD_Verwarming", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3495, Name = "EE_WD_Koeling", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3496, Name = "EE_WD_LogTimer", Length = 2, EepromDataType = typeof(ushort) },
+                    new EepromMapping { Address = 3498, Name = "EE_WD_Voeler_Temp", Length = 16, EepromDataType = typeof(byte[]) }, // Gedefineerd met 16 bytes, comments geven 32 bytes aan.
+                    new EepromMapping { Address = 3530, Name = "EE_WD_Voeler_Offset", Length = 16, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3546, Name = "EE_WD_SwitchWaardeExt", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3548, Name = "EE_WD_SwitchModeExt", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3550, Name = "EE_WD_SwitchVertragingOpExt", Length = 16, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3566, Name = "EE_WD_SwitchVertragingAfExt", Length = 16, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 3582, Name = "EE_WD_SwitchConditionExt", Length = 16, EepromDataType = typeof(byte[]) },
+
+                    new EepromMapping { Address = 3598, Name = "EE_RelayMode", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3599, Name = "EE_StandbyPowerSave", Length = 1, EepromDataType = typeof(byte) },
+
+                    new EepromMapping { Address = 3600, Name = "EE_WD_GeneratorTimer", Length = 2, EepromDataType = typeof(ushort) },
+                    new EepromMapping { Address = 3602, Name = "EE_GeneratorUrenTeller", Length = 2, EepromDataType = typeof(ushort) },
+                    new EepromMapping { Address = 3604, Name = "EE_GeneratorOndehoudUrenTeller", Length = 2, EepromDataType = typeof(ushort) },
+
+                    new EepromMapping { Address = 3606, Name = "EE_CompartimentEnable", Length = 1, EepromDataType = typeof(byte) },
+
+                    new EepromMapping { Address = 3607, Name = "EE_CompTempOffset", Length = 8, EepromDataType = typeof(sbyte[]) },
+                    new EepromMapping { Address = 3615, Name = "EE_CompVentMaxOffset", Length = 8, EepromDataType = typeof(sbyte[]) },
+                    new EepromMapping { Address = 3623, Name = "EE_CompVentMinOffset", Length = 8, EepromDataType = typeof(sbyte[]) },
+                    new EepromMapping { Address = 3631, Name = "EE_CompBandbOffset", Length = 8, EepromDataType = typeof(sbyte[]) },
+                    new EepromMapping { Address = 3639, Name = "EE_CompBBCStartOffset", Length = 8, EepromDataType = typeof(sbyte[]) },
+                    new EepromMapping { Address = 3647, Name = "EE_CompBBCOffset", Length = 8, EepromDataType = typeof(sbyte[]) },
+                    new EepromMapping { Address = 3655, Name = "EE_CompSensorNr", Length = 8, EepromDataType = typeof(byte[]) },
+
+                    new EepromMapping { Address = 3663, Name = "EE_CompVentAbsMin", Length = 1, EepromDataType = typeof(byte) },
+
+                    new EepromMapping { Address = 3664, Name = "EE_WaterNivauIngangNr", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3665, Name = "EE_WaterNivauPcbNr", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3666, Name = "EE_WaterTankMeldingAanUit", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3667, Name = "EE_LogInstellingen", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3668, Name = "EE_TrackAndTraceEnableSpeed", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3669, Name = "EE_TrackAndTraceNoSpeedDelay", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3670, Name = "EE_RelayBBackupBat", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3671, Name = "EE_TempBackupBat", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3672, Name = "EE_BackupBatType", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3673, Name = "EE_AtrEnable", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3674, Name = "EE_Output50A", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3675, Name = "EE_Output100A", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3676, Name = "EE_Output200A", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3677, Name = "EE_Output300A", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3678, Name = "EE_OutputStart", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3679, Name = "EE_StroomStart", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3680, Name = "EE_AutoRitnummerEnable", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3681, Name = "EE_AlwaysLog", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3682, Name = "EE_GpsAlarmEnable", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3683, Name = "EE_GsmAlarmEnable", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 3684, Name = "EE_GpsAlarmDelay", Length = 2, EepromDataType = typeof(ushort) },
+                    new EepromMapping { Address = 3686, Name = "EE_GsmAlarmDelay", Length = 2, EepromDataType = typeof(ushort) },
+
                 };
         }
 
+        public static void UpdateUnfoldedByteValue(int address, byte value)
+        {
+            unfoldedMapping.FirstOrDefault(item => item.Address ==  address).Value = value;
+        }
+
+        public static void UpdateUnfoldedSByteValue(int address, sbyte value)
+        {
+            unfoldedMapping.FirstOrDefault(item => item.Address == address).Value = value;
+        }
+
+        public static void UpdateUnfoldedByteArrayValue(int address, byte[] value)
+        {
+            var mapping = unfoldedMapping.FirstOrDefault(item => item.Address == address);
+            if (mapping != null && mapping.EepromDataType == typeof(byte[]))
+            {
+                mapping.Value = value;
+            }
+            else
+            {
+                throw new InvalidOperationException("Address not found or data type mismatch.");
+            }
+        }
+
+        public static void UpdateUnfoldedSbyteArrayValue(int address, sbyte[] value)
+        {
+            var mapping = unfoldedMapping.FirstOrDefault(item => item.Address == address);
+            if (mapping != null && mapping.EepromDataType == typeof(sbyte[]))
+            {
+                mapping.Value = value;
+            }
+            else
+            {
+                throw new InvalidOperationException("Address not found or data type mismatch.");
+            }
+        }
+
         public static void UpdateUnfoldedCharValue(int address, char value)
+        {
+            unfoldedMapping.FirstOrDefault(item => item.Address == address).Value = value;
+        }
+
+        public static void UpdateUnfoldedUIntValue(int address, uint value)
         {
             unfoldedMapping.FirstOrDefault(item => item.Address == address).Value = value;
         }

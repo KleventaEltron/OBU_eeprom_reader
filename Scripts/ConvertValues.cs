@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Presentation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,15 +16,58 @@ namespace EepromReader.Scripts
         }
 
         // Convert a byte array to a string
-        private string ByteArrayToString(byte[] Byte)
+        public string ByteArrayToString(byte[] Byte)
         {
             return System.Text.Encoding.ASCII.GetString(Byte);
         }
 
-        // Convert byte array to int
-        public int ByteArrayToInt(byte[] byteArray)
+        // Convert byte array to Uint
+        public uint ByteArrayToUInt16(byte[] byteArray)
         {
             return BitConverter.ToUInt16(byteArray, 0);
+        }
+
+        public int ByteArrayToInt16(byte[] byteArray)
+        {
+            return BitConverter.ToInt16(byteArray, 0);
+        }
+
+        public uint ByteArrayToUInt32(byte[] byteArray)
+        {
+            return BitConverter.ToUInt32(byteArray, 0);
+        }
+
+        public int ByteArrayToInt32(byte[] byteArray)
+        {
+            return BitConverter.ToInt32(byteArray, 0);
+        }
+
+        public List<byte[]> ConvertMatrixToByteList(byte[,] matrix)
+        {
+            var list = new List<byte[]>();
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+            for (int i = 0; i < rows; i++)
+            {
+                byte[] byteArray = new byte[columns];
+                for (int j = 0; j < columns; j++)
+                {
+                    byteArray[j] = matrix[i, j];
+                }
+                list.Add(byteArray);
+            }
+            return list;
+        }
+
+        public sbyte[] ConvertByteArrayToSbyteArray(byte[] array)
+        {
+            sbyte[] tempSbyteArray = new sbyte[array.Length];
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                tempSbyteArray[i] = Convert.ToSByte(array[i]);
+            }
+            return tempSbyteArray;
         }
 
         // Convert a matrix to a list of strings

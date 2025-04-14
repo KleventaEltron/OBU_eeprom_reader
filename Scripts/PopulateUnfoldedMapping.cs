@@ -1,4 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using EepromReader.Scripts;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace EepromReader.Scripts
     {
         public void FindUnfoldedMapping(EepromMapping address)
         {
-            if(EepromList.doesUnmappingExist(address.Address))
+            if (EepromList.doesUnmappingExist(address.Address))
             {
                 switch (address.EepromDataType)
                 {
@@ -20,18 +22,17 @@ namespace EepromReader.Scripts
                         SetUnfoldedMappingValue(address);
                         break;
                     case Type t when t == typeof(byte[]):
-                        SetUnfoldedMappingValue(address);   
-
+                        SetUnfoldedMappingValue(address);
                         break;
                     case Type t when t == typeof(byte[,]):
                         SetUnfoldedMappingValue(address);
-
                         break;
                     case Type t when t == typeof(byte[,,]):
                         SetUnfoldedMappingValue(address);
                         break;
                     default:
-                        Console.WriteLine("Unknown data type.");
+                        Console.WriteLine($"Unknown data type: {address.EepromDataType}");
+                        Console.WriteLine($"at address: {address.Address}");
                         break;
                 }
             }
@@ -45,18 +46,59 @@ namespace EepromReader.Scripts
 
             switch (UnFoldedAddress.EepromDataType)
             {
+                case Type t when t == typeof(byte):
+                    EepromList.UpdateUnfoldedByteValue(UnFoldedAddress.Address, (byte)address.Value);
+                    break;
+                case Type t when t == typeof(sbyte):
+                    sbyte tempSbyte = Convert.ToSByte(address.Value);
+                    EepromList.UpdateUnfoldedSByteValue(UnFoldedAddress.Address, tempSbyte);
+                    break;
                 case Type t when t == typeof(char):
                     char tempChar = convertValues.ConvertByteToChar((byte)address.Value);
                     EepromList.UpdateUnfoldedCharValue(UnFoldedAddress.Address, tempChar);
                     break;
-                case Type t when t == typeof(int):
-                    int tempInt = convertValues.ByteArrayToInt((byte[])address.Value);
-                    EepromList.UpdateUnfoldedIntValue(UnFoldedAddress.Address, tempInt);
+                case Type t when t == typeof(ushort):
+                    uint tempUshort = convertValues.ByteArrayToUInt16((byte[])address.Value);
+                    EepromList.UpdateUnfoldedUIntValue(UnFoldedAddress.Address, tempUshort);
+                    break;
+                case Type t when t == typeof(short):
+                    int tempShort = convertValues.ByteArrayToInt16((byte[])address.Value);
+                    EepromList.UpdateUnfoldedIntValue(UnFoldedAddress.Address, tempShort);
+                    break;
+                case Type t when t == typeof(uint):
+                    uint tempUint = convertValues.ByteArrayToUInt32((byte[])address.Value);
+                    EepromList.UpdateUnfoldedUIntValue(UnFoldedAddress.Address, tempUint);
+                    break;
+                case Type t when t == typeof(byte[]):
+
+                    if (address.EepromDataType == typeof(byte[,]))
+                    {
+                        List<byte[]> tempByteList = convertValues.ConvertMatrixToByteList((byte[,])address.Value);
+
+                        int rows = ((byte[,])address.Value).GetLength(0);
+                        int columns = ((byte[,])address.Value).GetLength(1);
+
+                        for (int i = 0; i < rows; i++)
+                        {
+                            EepromList.UpdateUnfoldedByteArrayValue(UnFoldedAddress.Address + (i * columns), tempByteList[i]);
+                        }
+                        break;
+                    }
+                    EepromList.UpdateUnfoldedByteArrayValue(UnFoldedAddress.Address, (byte[])address.Value);
+                    break;
+                case Type t when t == typeof(sbyte[]):
+                    sbyte[] tempSbyteArray = convertValues.ConvertByteArrayToSbyteArray((byte[])address.Value);
+                    EepromList.UpdateUnfoldedSbyteArrayValue(address.Address, tempSbyteArray);
                     break;
                 case Type t when t == typeof(string):
                     List<string> tempStringList;
 
-                    if (address.Value.GetType() == typeof(byte[,]))
+                    if (address.Value.GetType() == typeof(byte[]))
+                    {
+                        string tempString = convertValues.ByteArrayToString((byte[])address.Value);
+                        EepromList.UpdateUnfoldedStringValue(UnFoldedAddress.Address, tempString);
+                    }
+                    else if (address.Value.GetType() == typeof(byte[,]))
                     {
                         tempStringList = convertValues.ConvertMatrixToStringList((byte[,])address.Value);
 
@@ -84,7 +126,8 @@ namespace EepromReader.Scripts
 
                     break;
                 default:
-                    Console.WriteLine("Unknown data type.");
+
+                    Console.WriteLine($"Unknown data type with {UnFoldedAddress.EepromDataType} at address {UnFoldedAddress.Address}.");
                     break;
             }
         }

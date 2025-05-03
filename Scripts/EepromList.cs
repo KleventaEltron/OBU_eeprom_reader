@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Office.CustomUI;
 using DocumentFormat.OpenXml.Presentation;
 using System;
 using System.Collections.Generic;
@@ -697,6 +698,65 @@ namespace EepromReader.Scripts
 
                     new EepromMapping { Address = 1914, Name = "EE_Groot_Dummy5", Length = 200, EepromDataType = typeof(byte[]) },
 
+                    new EepromMapping { Address = 2114, Name = "EE_MU_ToevoerVentNaam", Length = 15, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2129, Name = "EE_MU_AfvoerVentNaam", Length = 15, EepromDataType = typeof(string) },
+                    new EepromMapping { Address = 2144, Name = "EE_MU_WaterNivauNaam", Length = 15, EepromDataType = typeof(string) },
+
+                    new EepromMapping { Address = 2159, Name = "EE_Groot_Dummy6", Length = 185, EepromDataType = typeof(byte[])},
+
+                    new EepromMapping { Address = 2344, Name = "EE_MU_PictogramD1", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2345, Name = "EE_MU_PictogramD2", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2346, Name = "EE_MU_PictogramSwitchExt1", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2347, Name = "EE_MU_PictogramSwitchExt2", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2348, Name = "EE_MU_PictogramSwitchExt3", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2349, Name = "EE_MU_PictogramSwitchExt4", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2350, Name = "EE_MU_PictogramSwitchExt5", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2351, Name = "EE_MU_PictogramSwitchExt6", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2352, Name = "EE_MU_PictogramSwitchExt7", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2353, Name = "EE_MU_PictogramSwitchExt8", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2354, Name = "EE_MU_PictogramSwitchExt9", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2355, Name = "EE_MU_PictogramSwitchExt10", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2356, Name = "EE_MU_PictogramSwitchExt11", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2357, Name = "EE_MU_PictogramSwitchExt12", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2358, Name = "EE_MU_PictogramSwitchExt13", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2359, Name = "EE_MU_PictogramSwitchExt14", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2360, Name = "EE_MU_PictogramSwitchExt15", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2361, Name = "EE_MU_PictogramSwitchExt16", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2362, Name = "EE_MU_PictogramWaterNivau", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2363, Name = "EE_SmsSelectNew", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 2365, Name = "EE_SmsSendMaxProDayEnable", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2366, Name = "EE_SmsSendMaxProDay", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2367, Name = "EE_Groot_Dummy7", Length = 95, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 2462, Name = "EE_MU_PictorgramTempExt1", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2463, Name = "EE_MU_PictorgramTempExt2", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2464, Name = "EE_MU_PictorgramTempExt3", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2465, Name = "EE_MU_PictorgramTempExt4", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2466, Name = "EE_MU_PictorgramTempExt5", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2467, Name = "EE_MU_PictorgramTempExt6", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2468, Name = "EE_MU_PictorgramTempExt7", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2469, Name = "EE_MU_PictorgramTempExt8", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2470, Name = "EE_MU_PictorgramTempExt9", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2471, Name = "EE_MU_PictorgramTempExt10", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2472, Name = "EE_MU_PictorgramTempExt11", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2473, Name = "EE_MU_PictorgramTempExt12", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2474, Name = "EE_MU_PictorgramTempExt13", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2475, Name = "EE_MU_PictorgramTempExt14", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2476, Name = "EE_MU_PictorgramTempExt15", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2477, Name = "EE_MU_PictorgramTempExt16", Length = 1, EepromDataType = typeof(byte) },
+                    
+                    new EepromMapping { Address = 2478, Name = "EE_WachdagReset", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2479, Name = "EE_WaterNivauEnable", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2480, Name = "EE_WaterNivauMin", Length = 2, EepromDataType = typeof(ushort) },
+                    new EepromMapping { Address = 2482, Name = "EE_WaterNivauMax", Length = 2, EepromDataType = typeof(ushort) },
+                    new EepromMapping { Address = 2484, Name = "EE_WaterNivauAlarm", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2485, Name = "EE_waterNivauAlarmVertraging", Length = 1, EepromDataType = typeof(byte) },
+                    new EepromMapping { Address = 2486, Name = "EE_WaterTemperatuurSensor", Length = 2, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 2488, Name = "EE_WaterTemperatuurMax", Length = 2, EepromDataType = typeof(short) },
+                    new EepromMapping { Address = 2490, Name = "EE_WaterTemperatuurMin", Length = 2, EepromDataType = typeof(short) },
+                    new EepromMapping { Address = 2492, Name = "EE_WaterTemperatuurAlarmVertraging", Length = 1, EepromDataType = typeof(byte) },
+                    
+                    new EepromMapping { Address = 2493, Name = "EE_SmsSelect", Length = 1, EepromDataType = typeof(byte) },
+
                     new EepromMapping { Address = 2494, Name = "EE_SmsNrsEnNaam1", Length = 15, EepromDataType = typeof(string) },
                     new EepromMapping { Address = 2509, Name = "EE_SmsNrsEnNaam2", Length = 15, EepromDataType = typeof(string) },
                     new EepromMapping { Address = 2524, Name = "EE_SmsNrsEnNaam3", Length = 15, EepromDataType = typeof(string) },
@@ -752,6 +812,7 @@ namespace EepromReader.Scripts
                     new EepromMapping { Address = 3104, Name = "EE_weergaveLijst18", Length = 2, EepromDataType = typeof(byte[]) },
                     new EepromMapping { Address = 3106, Name = "EE_weergaveLijst19", Length = 2, EepromDataType = typeof(byte[]) },
                     new EepromMapping { Address = 3108, Name = "EE_weergaveLijst20", Length = 2, EepromDataType = typeof(byte[]) },
+                    
                     new EepromMapping { Address = 3110, Name = "EE_GprsSendVarMem", Length = 50, EepromDataType = typeof(byte[]) },
                     new EepromMapping { Address = 3160, Name = "EE_GprsSendVarStartAddr", Length = 50, EepromDataType = typeof(byte[]) },
                     new EepromMapping { Address = 3360, Name = "EE_GprsSendVarLengte", Length = 50, EepromDataType = typeof(byte[]) },
@@ -843,10 +904,10 @@ namespace EepromReader.Scripts
 
         public static void UpdateUnfoldedByteArrayValue(int address, byte[] value)
         {
-            var mapping = unfoldedMapping.FirstOrDefault(item => item.Address == address);
-            if (mapping != null && mapping.EepromDataType == typeof(byte[]))
+            var temp_mapping = unfoldedMapping.FirstOrDefault(item => item.Address == address);
+            if (temp_mapping != null && temp_mapping.EepromDataType == typeof(byte[]))
             {
-                mapping.Value = value;
+                temp_mapping.Value = value;
             }
             else
             {
@@ -856,10 +917,10 @@ namespace EepromReader.Scripts
 
         public static void UpdateUnfoldedSbyteArrayValue(int address, sbyte[] value)
         {
-            var mapping = unfoldedMapping.FirstOrDefault(item => item.Address == address);
-            if (mapping != null && mapping.EepromDataType == typeof(sbyte[]))
+            var temp_mapping = unfoldedMapping.FirstOrDefault(item => item.Address == address);
+            if (temp_mapping != null && temp_mapping.EepromDataType == typeof(sbyte[]))
             {
-                mapping.Value = value;
+                temp_mapping.Value = value;
             }
             else
             {

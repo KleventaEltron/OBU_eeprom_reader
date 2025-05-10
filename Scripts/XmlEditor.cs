@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,19 +22,19 @@ namespace EepromReader.Scripts
                 // Add headers
                 worksheet.Cell(currentRow, 1).Value = "Address";
                 worksheet.Cell(currentRow, 2).Value = "Name";
-                worksheet.Cell(currentRow, 3).Value = "Length";
-                worksheet.Cell(currentRow, 4).Value = "Data Type";
-                worksheet.Cell(currentRow, 5).Value = "Values";
+                //worksheet.Cell(currentRow, 3).Value = "Length";
+                worksheet.Cell(currentRow, 3).Value = "Data Type";
+                worksheet.Cell(currentRow, 4).Value = "Values";
                 currentRow++;
 
                 foreach (var mapping in mappings)
                 {
                     worksheet.Cell(currentRow, 1).Value = mapping.Address;
                     worksheet.Cell(currentRow, 2).Value = mapping.Name;
-                    worksheet.Cell(currentRow, 3).Value = mapping.Length;
-                    worksheet.Cell(currentRow, 4).Value = mapping.EepromDataType.Name;
+                    //worksheet.Cell(currentRow, 3).Value = mapping.Length;
+                    worksheet.Cell(currentRow, 3).Value = mapping.EepromDataType.Name;
 
-                    var cell = worksheet.Cell(currentRow, 5);
+                    var cell = worksheet.Cell(currentRow, 4);
                     var value = mapping.Value;
 
                     // Set correct typed value
@@ -60,6 +61,13 @@ namespace EepromReader.Scripts
                 }
 
                 worksheet.Columns().AdjustToContents();
+
+                var directory = Path.GetDirectoryName(filePath);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
                 workbook.SaveAs(filePath);
             }
         }
@@ -130,7 +138,7 @@ namespace EepromReader.Scripts
                     string dataString = worksheet.Cell(row, 4).GetValue<string>();
 
                     // Find the corresponding mapping
-                    var mapping = mappings.FirstOrDefault(m => m.Address == address && m.Name == name);
+                    var mapping = mappings.FirstOrDefault(m => m.Address == address);// && m.Name == name);
                     if (mapping != null)
                     {
                         Type dataType;
@@ -149,6 +157,30 @@ namespace EepromReader.Scripts
                         else if (dataTypeString == "Byte[,,]")
                         {
                             dataType = typeof(byte[,,]);
+                        }
+                        else if (dataTypeString == "SByte")
+                        {
+                            dataType = typeof(sbyte);
+                        }
+                        else if (dataTypeString == "SByte[]")
+                        {
+                            dataType = typeof(sbyte[]);
+                        }
+                        else if (dataTypeString == "Int16")
+                        {
+                            dataType = typeof(short);
+                        }
+                        else if(dataTypeString == "UInt16")
+                        {
+                            dataType = typeof(ushort);
+                        }
+                        else if(dataTypeString == "UInt32")
+                        {
+                            dataType = typeof(uint);
+                        }
+                        else if (dataTypeString == "String")
+                        {
+                            dataType = typeof(string);
                         }
                         else
                         {
@@ -226,8 +258,20 @@ namespace EepromReader.Scripts
         {
             if (dataType == typeof(byte))
                 return byte.Parse(dataString);
+            else if (dataType == typeof(sbyte))
+                return sbyte.Parse(dataString);
+            else if (dataType == typeof(short))
+                return short.Parse(dataString);
+            else if (dataType == typeof(ushort))
+                return ushort.Parse(dataString);
+            else if (dataType == typeof(uint))
+                return uint.Parse(dataString);
+            else if (dataType == typeof(string))
+                return dataString;
             else if (dataType == typeof(byte[]))
                 return dataString.Split(',').Select(byte.Parse).ToArray();
+            else if (dataType == typeof(sbyte[]))
+                return dataString.Split(',').Select(sbyte.Parse).ToArray();
             else if (dataType == typeof(byte[,]))
             {
                 // Split the data string into rows by newline characters

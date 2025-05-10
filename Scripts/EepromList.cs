@@ -146,7 +146,7 @@ namespace EepromReader.Scripts
                     new EepromMapping { Address = 508, Name = "EE_ServerPortSource", Length = 2, EepromDataType = typeof(byte[]) },
 
                     // Reserved GSM Data
-                    new EepromMapping { Address = 509, Name = "EE_ResGsm2", Length = 20, EepromDataType = typeof(byte[]) },
+                    new EepromMapping { Address = 510, Name = "EE_ResGsm2", Length = 20, EepromDataType = typeof(byte[]) },
 
                     // RTC Offset (as byte)
                     new EepromMapping { Address = 530, Name = "EE_RtcOffsetGmt", Length = 1, EepromDataType = typeof(byte) },

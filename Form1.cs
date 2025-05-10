@@ -25,8 +25,17 @@ namespace EepromReader
         // Test button for importing from Excel
         private void button1_Click(object sender, EventArgs e)
         {
-            string excelFilePath = "C:\\Users\\bob\\Desktop\\KVM-Manager-test\\Excel\\EEPROM5.xlsx";
-            xmlEditor.ImportFromExcel(EepromList.mapping, excelFilePath);
+            string excelFilePath = "C:\\Users\\bob\\Desktop\\KVM-Manager-test\\EepromUnfoldedMapping.xlsx";
+            xmlEditor.ImportFromExcel(EepromList.unfoldedMapping, excelFilePath);
+
+            foreach (var item in EepromList.unfoldedMapping)
+            {
+                Console.WriteLine(item.Address);
+                Console.WriteLine(item.Name);
+                Console.WriteLine(item.Length);
+                Console.WriteLine(item.Value);
+                Console.WriteLine(item.EepromDataType);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -80,7 +80,7 @@ namespace EepromReader.Forms
                 Console.WriteLine($"Datatype: {item.EepromDataType}\n");
             }
 
-            xmlEditor.CreateEepromExcel(EepromList.unfoldedMapping, "C:\\Users\\bobri\\Desktop\\EepromUnfoldedMapping.xlsx");
+            xmlEditor.CreateEepromExcel(EepromList.unfoldedMapping, "C:\\Users\\bob\\Desktop\\KVM-Manager-test\\EepromUnfoldedMapping.xlsx");
         }
     }
 }

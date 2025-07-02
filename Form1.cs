@@ -26,7 +26,7 @@ namespace EepromReader
         private void button1_Click(object sender, EventArgs e)
         {
             string excelFilePath = "C:\\Users\\bob\\Desktop\\KVM-Manager-test\\EepromUnfoldedMapping.xlsx";
-            xmlEditor.ImportFromExcel(EepromList.unfoldedMapping, excelFilePath);
+            xmlEditor.ImportFromExcel(EepromList.unfoldedMapping, excelFilePath, true);
 
             foreach (var item in EepromList.unfoldedMapping)
             {

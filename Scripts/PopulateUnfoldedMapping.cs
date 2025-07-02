@@ -38,7 +38,7 @@ namespace EepromReader.Scripts
             }
         }
 
-        private void SetUnfoldedMappingValue(EepromMapping address)
+        public void SetUnfoldedMappingValue(EepromMapping address)
         {
             ConvertValues convertValues = new ConvertValues();
 
@@ -58,15 +58,41 @@ namespace EepromReader.Scripts
                     EepromList.UpdateUnfoldedCharValue(UnFoldedAddress.Address, tempChar);
                     break;
                 case Type t when t == typeof(ushort):
-                    uint tempUshort = convertValues.ByteArrayToUInt16((byte[])address.Value);
+                    uint tempUshort = 0;// = convertValues.ByteArrayToUInt16((byte[])address.Value);
+                    if (address.Value is ushort ushortVal)
+                    {
+                        tempUshort = ushortVal;
+                    }
+                    else if (address.Value is byte[] byteArr)
+                    {
+                        tempUshort = convertValues.ByteArrayToUInt16(byteArr);
+                    }
                     EepromList.UpdateUnfoldedUIntValue(UnFoldedAddress.Address, tempUshort);
                     break;
                 case Type t when t == typeof(short):
-                    int tempShort = convertValues.ByteArrayToInt16((byte[])address.Value);
+                    //int tempShort = convertValues.ByteArrayToInt16((byte[])address.Value);
+                    int tempShort = 0;
+                    if (address.Value is short shortVal)
+                    {
+                        tempShort = shortVal;
+                    }
+                    else if (address.Value is byte[] byteArr)
+                    {
+                        tempShort = convertValues.ByteArrayToInt16(byteArr);
+                    }
                     EepromList.UpdateUnfoldedIntValue(UnFoldedAddress.Address, tempShort);
                     break;
                 case Type t when t == typeof(uint):
-                    uint tempUint = convertValues.ByteArrayToUInt32((byte[])address.Value);
+                    //uint tempUint = convertValues.ByteArrayToUInt32((byte[])address.Value);
+                    uint tempUint = 0;
+                    if (address.Value is uint uintVal)
+                    {
+                        tempUint = uintVal;
+                    }
+                    else if (address.Value is byte[] byteArr)
+                    {
+                        tempUint = convertValues.ByteArrayToUInt32(byteArr);
+                    }
                     EepromList.UpdateUnfoldedUIntValue(UnFoldedAddress.Address, tempUint);
                     break;
                 case Type t when t == typeof(byte[]):

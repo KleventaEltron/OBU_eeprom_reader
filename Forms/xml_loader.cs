@@ -14,6 +14,7 @@ namespace EepromReader.Forms
     public partial class xml_loader : Form
     {
         XmlEditor xmlEditor = new XmlEditor();
+        FolderNavigation folderNavigation = new FolderNavigation();
 
         public xml_loader()
         {
@@ -22,47 +23,98 @@ namespace EepromReader.Forms
 
         private void button_get_xml_Click(object sender, EventArgs e)
         {
-            string xmlFilePath = openXmlFile();
+            string xmlFilePath = folderNavigation.FileOrFolderNavigation("OpenFile");
             if (xmlFilePath != null)
             {
                 Console.WriteLine("File path: " + xmlFilePath);
-                xmlEditor.ImportFromExcel(EepromList.mapping, xmlFilePath);
-                TestUnfoldedMapping();
-            }
-        }
+                textBox_xml_location.Text = xmlFilePath;
 
-        private string openXmlFile()
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                // Set the filter to XML files only
-                openFileDialog.Filter = "Excel Files|*.xlsx;*.xlsm|All Files|*.*";
-                openFileDialog.Title = "Select an XML File";
-
-                // Show the dialog and check if the user selects a file
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                if (checkBox1.Checked)
                 {
-                    string selectedFilePath = openFileDialog.FileName;
-                    Console.WriteLine("Selected file: " + selectedFilePath);
-                    textBox_xml_location.Text = selectedFilePath;
-                    return selectedFilePath;
+                    xmlEditor.ImportFromExcel(EepromList.unfoldedMapping, xmlFilePath, true);
+                    InsertUnfoldedMapping();
                 }
                 else
                 {
-                    Console.WriteLine("No file selected.");
-                    return null;
+                    xmlEditor.ImportFromExcel(EepromList.mapping, xmlFilePath, false);
+                    InsertFoldedMapping();
                 }
+                
             }
         }
 
-        private void TestUnfoldedMapping()
+        private void save_eeprom_btn_Click(object sender, EventArgs e)
+        {
+            string xmlFilePath = folderNavigation.FileOrFolderNavigation("SaveFile");
+            save_eeprom_textbox.Text = xmlFilePath;
+            xmlEditor.CreateEepromExcel(EepromList.unfoldedMapping, xmlFilePath);
+        }
+
+        private void InsertFoldedMapping()
+        {
+            foreach (var item in EepromList.mapping)
+            {
+                Console.WriteLine($"Address: {item.Address}");
+                Console.WriteLine($"Name: {item.Name}");
+                Console.WriteLine($"Length: {item.Length}");
+                if (item.Value is byte[] byteArray)
+                {
+                    Console.WriteLine($"Value: {BitConverter.ToString(byteArray)}");
+                }
+                else
+                {
+                    Console.WriteLine($"Value: {item.Value}");
+                }
+                Console.WriteLine($"Datatype: {item.EepromDataType}\n");
+            }
+
+            //PopulateFoldedMapping populateFoldedMapping = new PopulateFoldedMapping();
+            //List<EepromMapping> MappingList = new List<EepromMapping>();
+            //bool listInsert = false;
+
+            //foreach (var item in EepromList.unfoldedMapping)
+            //{
+            //    var mapping = EepromList.GetMappingByAddress(item.Address);
+            //    if (mapping != null && mapping.EepromDataType == typeof(byte[,]))
+            //    {
+            //        listInsert = true;
+            //        MappingList.Add(item);
+            //        Console.WriteLine("Found one");
+            //        continue;
+            //    }
+
+            //    if (listInsert && mapping == null)
+            //    {
+            //        MappingList.Add(item);
+            //        continue;
+            //    }
+
+            //    if(listInsert && mapping != null)
+            //    {
+            //        listInsert = false;
+            //        byte[,] temp = populateFoldedMapping.ConvertToByteMatrix(MappingList);
+            //        foreach(var item2 in temp)
+            //        {
+            //            //Console.WriteLine(item2);
+            //        }
+            //        MappingList.Clear();
+
+
+            //    }
+
+            //    var data = populateFoldedMapping.ConvertToBytes(item);
+            //    Console.WriteLine(data.ToString());
+            //populateFoldedMapping.ConvertToBytesAndUpdate(item);
+        }
+
+        private void InsertUnfoldedMapping()
         {
             PopulateUnfoldedMapping populateUnfoldedMapping = new PopulateUnfoldedMapping();
 
-            foreach (var item in EepromList.mapping)
-            {
-                populateUnfoldedMapping.FindUnfoldedMapping(item);
-            }
+            //foreach (var item in EepromList.mapping)
+            //{
+            //    populateUnfoldedMapping.FindUnfoldedMapping(item);
+            //}
 
             foreach (var item in EepromList.unfoldedMapping)
             {
@@ -79,8 +131,11 @@ namespace EepromReader.Forms
                 }
                 Console.WriteLine($"Datatype: {item.EepromDataType}\n");
             }
+        }
 
-            xmlEditor.CreateEepromExcel(EepromList.unfoldedMapping, "C:\\Users\\bob\\Desktop\\KVM-Manager-test\\EepromUnfoldedMapping.xlsx");
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

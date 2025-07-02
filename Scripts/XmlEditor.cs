@@ -110,7 +110,7 @@ namespace EepromReader.Scripts
             return result.ToString();
         }
 
-        public void ImportFromExcel(List<EepromMapping> mappings, string filePath)
+        public void ImportFromExcel(List<EepromMapping> mappings, string filePath, bool unfolded)
         {
             using (var workbook = new XLWorkbook(filePath))
             {
@@ -193,6 +193,12 @@ namespace EepromReader.Scripts
                         {
                             // Parse and assign the value to the mapping
                             mapping.Value = ConvertStringToData(dataString, dataType);
+
+                            if (unfolded)
+                            {
+                                PopulateUnfoldedMapping unfoldedMapping = new PopulateUnfoldedMapping();
+                                unfoldedMapping.SetUnfoldedMappingValue(mapping);
+                            }                           
 
                             ToArray(mapping);
                         }

@@ -892,6 +892,24 @@ namespace EepromReader.Scripts
                 };
         }
 
+        #region UpdateFoldedMappping
+
+        public static EepromMapping GetMappingByAddress(int address)
+        {
+            return mapping.FirstOrDefault(item => item.Address == address);
+        }
+
+        public static void UpdateMappingByteValue(int address, byte value)
+        {
+            mapping.FirstOrDefault(item => item.Address == address).Value = value;
+        }
+
+
+
+        #endregion
+
+        #region UpdateUnFoldedMapping
+
         public static void UpdateUnfoldedByteValue(int address, byte value)
         {
             unfoldedMapping.FirstOrDefault(item => item.Address ==  address).Value = value;
@@ -948,11 +966,6 @@ namespace EepromReader.Scripts
             unfoldedMapping.FirstOrDefault(item => item.Address == address).Value = value;
         }
 
-        public static EepromMapping GetMappingByAddress(int address)
-        {
-            return mapping.FirstOrDefault(item => item.Address == address);
-        }
-
         public static EepromMapping GetUnfoldedMappingByAddress(int address)
         {
             return unfoldedMapping.FirstOrDefault(item => item.Address == address);
@@ -987,5 +1000,7 @@ namespace EepromReader.Scripts
             Console.WriteLine($"Value: {uMapping.Value}");
             Console.WriteLine($"EepromDataType: {uMapping.EepromDataType}");
         }
+
+        #endregion
     }
 }

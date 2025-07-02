@@ -101,6 +101,8 @@
     <Compile Include="Scripts\ConvertValues.cs" />
     <Compile Include="Scripts\EepromList.cs" />
     <Compile Include="Scripts\EepromMapping.cs" />
+    <Compile Include="Scripts\FolderNavigation.cs" />
+    <Compile Include="Scripts\PopulateFoldedMapping.cs" />
     <Compile Include="Scripts\PopulateUnfoldedMapping.cs" />
     <Compile Include="Scripts\XmlEditor.cs" />
     <EmbeddedResource Include="Form1.resx">

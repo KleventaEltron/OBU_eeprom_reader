@@ -47,7 +47,14 @@ namespace EepromReader.Forms
         {
             string xmlFilePath = folderNavigation.FileOrFolderNavigation("SaveFile");
             save_eeprom_textbox.Text = xmlFilePath;
-            xmlEditor.CreateEepromExcel(EepromList.unfoldedMapping, xmlFilePath);
+            if (checkBox1.Checked)
+            {
+                xmlEditor.CreateEepromExcel(EepromList.unfoldedMapping, xmlFilePath);
+            }
+            else
+            {
+                xmlEditor.CreateEepromExcel(EepromList.mapping, xmlFilePath);
+            }
         }
 
         private void InsertFoldedMapping()
@@ -57,16 +64,53 @@ namespace EepromReader.Forms
                 Console.WriteLine($"Address: {item.Address}");
                 Console.WriteLine($"Name: {item.Name}");
                 Console.WriteLine($"Length: {item.Length}");
+
                 if (item.Value is byte[] byteArray)
                 {
-                    Console.WriteLine($"Value: {BitConverter.ToString(byteArray)}");
+                    Console.WriteLine($"Value: {string.Join(" ", byteArray)}");
+                }
+                else if (item.Value is byte[,] byteArray2D)
+                {
+                    Console.WriteLine("Value:");
+                    int dim0 = byteArray2D.GetLength(0);
+                    int dim1 = byteArray2D.GetLength(1);
+                    for (int i = 0; i < dim0; i++)
+                    {
+                        for (int j = 0; j < dim1; j++)
+                        {
+                            Console.Write($"{byteArray2D[i, j]} ");
+                        }
+                        Console.WriteLine();
+                    }
+                }
+                else if (item.Value is byte[,,] byteArray3D)
+                {
+                    Console.WriteLine("Value:");
+                    int d0 = byteArray3D.GetLength(0);
+                    int d1 = byteArray3D.GetLength(1);
+                    int d2 = byteArray3D.GetLength(2);
+                    for (int i = 0; i < d0; i++)
+                    {
+                        Console.WriteLine($"Slice {i}:");
+                        for (int j = 0; j < d1; j++)
+                        {
+                            for (int k = 0; k < d2; k++)
+                            {
+                                Console.Write($"{byteArray3D[i, j, k]} ");
+                            }
+                            Console.WriteLine();
+                        }
+                    }
                 }
                 else
                 {
                     Console.WriteLine($"Value: {item.Value}");
                 }
+
                 Console.WriteLine($"Datatype: {item.EepromDataType}\n");
             }
+
+
 
             //PopulateFoldedMapping populateFoldedMapping = new PopulateFoldedMapping();
             //List<EepromMapping> MappingList = new List<EepromMapping>();

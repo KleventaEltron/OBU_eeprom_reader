@@ -181,5 +181,18 @@ namespace EepromReader.Forms
         {
 
         }
+
+        private void button_convert_Click(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                PopulateUnfoldedMapping populateUnfoldedMapping = new PopulateUnfoldedMapping();
+
+                foreach (var item in EepromList.mapping)
+                {
+                    populateUnfoldedMapping.FindUnfoldedMapping(item);
+                }
+            }
+        }
     }
 }

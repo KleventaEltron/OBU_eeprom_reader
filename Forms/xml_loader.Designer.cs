@@ -33,6 +33,7 @@
             this.save_eeprom_btn = new System.Windows.Forms.Button();
             this.save_eeprom_textbox = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button_convert = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox_xml_location
@@ -85,11 +86,22 @@
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
+            // button_convert
+            // 
+            this.button_convert.Location = new System.Drawing.Point(152, 26);
+            this.button_convert.Name = "button_convert";
+            this.button_convert.Size = new System.Drawing.Size(130, 30);
+            this.button_convert.TabIndex = 5;
+            this.button_convert.Text = "Convert";
+            this.button_convert.UseVisualStyleBackColor = true;
+            this.button_convert.Click += new System.EventHandler(this.button_convert_Click);
+            // 
             // xml_loader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 366);
+            this.Controls.Add(this.button_convert);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.save_eeprom_textbox);
             this.Controls.Add(this.save_eeprom_btn);
@@ -110,5 +122,6 @@
         private System.Windows.Forms.Button save_eeprom_btn;
         private System.Windows.Forms.TextBox save_eeprom_textbox;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button_convert;
     }
 }

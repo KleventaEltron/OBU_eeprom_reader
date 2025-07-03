@@ -192,6 +192,8 @@ namespace EepromReader.Forms
                 {
                     populateUnfoldedMapping.FindUnfoldedMapping(item);
                 }
+
+                MessageBox.Show("Conversie naar unfolded geslaagd", "Conversie popup", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
